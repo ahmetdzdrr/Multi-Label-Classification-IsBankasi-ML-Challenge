@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [What is Multi-Label Classification?](#what-is-multi-label-classification)
 - [Project Overview](#project-overview)
 - [Installation](#installation)
 - [Usage Code](#usage)
@@ -14,6 +15,33 @@
 Welcome to the Isbankasi Machine Learning project repository. This project is designed for machine learning practitioners and data scientists who are interested in working with Isbankasi data. The repository includes code for various data preprocessing tasks, data visualization, model optimization, and multi-label classification.
 
 In this README, we provide an overview of the code and its functionalities.
+
+## What is Multi-Label Classification?
+
+### Classifier Chain (CC)
+
+- **Description**: Classifier Chain is a multi-label classification technique where a set of binary classifiers is created, one for each label in the dataset.
+  
+- **Methodology**: Each binary classifier predicts the presence or absence of its corresponding label. The order of the labels matters, as the prediction of one label can influence the prediction of subsequent labels in the chain.
+  
+- **Use Cases**: CC is effective when there are label dependencies or correlations in the dataset.
+
+## Label Powerset (LP)
+
+- **Description**: Label Powerset is a multi-label classification approach that transforms the problem into a multi-class problem by creating a unique class for each possible combination of labels.
+  
+- **Methodology**: LP simplifies the multi-label problem but can lead to an exponential increase in the number of classes when dealing with many labels. It's suitable when labels are not highly correlated, and it treats each label combination as a distinct class.
+  
+- **Use Cases**: LP is used when dealing with a wide range of label combinations, and the labels are not strongly correlated.
+
+## Binary Relevance (BR)
+
+- **Description**: Binary Relevance is a straightforward approach to multi-label classification where a separate binary classifier is trained for each label independently.
+  
+- **Methodology**: Each classifier predicts the presence or absence of one label without considering the other labels. BR doesn't capture label dependencies or correlations but is computationally efficient and easy to implement.
+  
+- **Use Cases**: BR works well when labels are mostly independent, and computational efficiency is a priority.
+
 
 ## Project Overview
 
