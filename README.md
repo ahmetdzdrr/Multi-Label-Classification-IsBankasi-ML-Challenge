@@ -39,12 +39,11 @@ To get started with this project, follow these steps:
 
 1. Clone this repository to your local machine using Git:
 
-   ```bash
-   git clone https://github.com/ahmetdzdrr/Multi-Label-Classification.git
+         git clone https://github.com/ahmetdzdrr/Multi-Label-Classification.git
 
 2. Install the required Python libraries by running:
-   ```bash
-    pip install -r requirements.txt
+
+          pip install -r requirements.txt
 
 ## Usage Code
 
@@ -67,14 +66,12 @@ To run the project, follow these steps:
 
 - You need to install Optuna in your Python environment. You can do this using pip:
 
-    ```bash
-      pip install optuna
+       pip install optuna
 
 ### Step 2: Import Optuna and the Machine Learning Library
 
 - In your Jupyter Notebook or Python script, import Optuna and the machine learning library you want to optimize (e.g., XGBoost, LGBM, or CatBoost).
 
-    ```bash
       import optuna
       import xgboost as xgb
       import lightgbm as lgb
@@ -86,7 +83,6 @@ To run the project, follow these steps:
 
 Here's an example for optimizing the AUC score with XGBoost:
 
-    ```bash
       def objective(trial):
           params = {
               "objective": "binary:logistic",
@@ -95,14 +91,14 @@ Here's an example for optimizing the AUC score with XGBoost:
               "lambda": trial.suggest_float("lambda", 1e-8, 1.0, log=True),
               # Add more hyperparameters to tune
           }
-
-    dtrain = xgb.DMatrix(X_train, label=y_train)
-    model = xgb.train(params, dtrain)
-    predictions = model.predict(dtest)
-
-    auc = sklearn.metrics.roc_auc_score(y_test, predictions)
-    return auc
-    
+      
+       dtrain = xgb.DMatrix(X_train, label=y_train)
+       model = xgb.train(params, dtrain)
+       predictions = model.predict(dtest)
+      
+       auc = sklearn.metrics.roc_auc_score(y_test, predictions)
+       return auc
+       
 ### Step 4: Create an Optuna Study
 
 - Create an Optuna study to run the optimization. You can specify the optimization direction, e.g., "maximize" or "minimize" based on your chosen objective (e.g., AUC).
@@ -114,15 +110,13 @@ Here's an example for optimizing the AUC score with XGBoost:
 
 -Run the optimization process with a specified number of trials. Optuna will search for the best hyperparameters based on the objective function.
     
-    ```bash
       study.optimize(objective, n_trials=100)
       
 ### Step 6: Retrieve the Best Parameters
 
 - Once the optimization is complete, you can retrieve the best set of hyperparameters from the study object:
 
-    ```bash
-   best_params = study.best_params
+      best_params = study.best_params
 
 - You can then use these best hyperparameters to train your final model with XGBoost, LGBM, or CatBoost.
 
