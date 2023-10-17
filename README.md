@@ -5,10 +5,9 @@
 - [Introduction](#introduction)
 - [Project Overview](#project-overview)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Code Details](#code-details)
-- [Contributing](#contributing)
-- [License](#license)
+- [Usage Code](#usage)
+- [How to Use Optuna?](#how-to-use-optuna)
+
 
 ## Introduction
 
@@ -47,7 +46,7 @@ To get started with this project, follow these steps:
    ```bash
     pip install -r requirements.txt
 
-## Usage
+## Usage Code
 
 Usage
 To run the project, follow these steps:
@@ -59,3 +58,78 @@ To run the project, follow these steps:
 - Open the Jupyter Notebook file (multi_label_classification.ipynb) in your Jupyter Notebook environment.
 
 - Run each cell in the notebook sequentially. The code in the notebook will process the data, perform the selected operations, and generate the desired output.
+
+## How to Use Optuna?
+
+- Optuna is a Python library for optimizing machine learning model hyperparameters. You can use it with various machine learning frameworks, including XGBoost, LightGBM (LGBM), and CatBoost. Here's a short guide on how to do that:
+
+### Step 1: Install Optuna
+
+- You need to install Optuna in your Python environment. You can do this using pip:
+
+    ```bash
+      pip install optuna
+
+### Step 2: Import Optuna and the Machine Learning Library
+
+- In your Jupyter Notebook or Python script, import Optuna and the machine learning library you want to optimize (e.g., XGBoost, LGBM, or CatBoost).
+
+    ```bash
+      import optuna
+      import xgboost as xgb
+      import lightgbm as lgb
+      from catboost import CatBoostClassifier
+
+### Step 3: Define an Objective Function
+
+- Create an objective function that Optuna will optimize. This function takes an Optuna trial object as an argument and returns a score that you want to minimize or maximize. This score is typically a metric of your model's performance.
+
+Here's an example for optimizing the AUC score with XGBoost:
+
+    ```bash
+      def objective(trial):
+          params = {
+              "objective": "binary:logistic",
+              "eval_metric": "auc",
+              "booster": trial.suggest_categorical("booster", ["gbtree", "gblinear", "dart"]),
+              "lambda": trial.suggest_float("lambda", 1e-8, 1.0, log=True),
+              # Add more hyperparameters to tune
+          }
+
+    dtrain = xgb.DMatrix(X_train, label=y_train)
+    model = xgb.train(params, dtrain)
+    predictions = model.predict(dtest)
+
+    auc = sklearn.metrics.roc_auc_score(y_test, predictions)
+    return auc
+    
+### Step 4: Create an Optuna Study
+
+- Create an Optuna study to run the optimization. You can specify the optimization direction, e.g., "maximize" or "minimize" based on your chosen objective (e.g., AUC).
+
+    ```bash
+      study = optuna.create_study(direction="maximize")
+
+### Step 5: Start the Optimization
+
+-Run the optimization process with a specified number of trials. Optuna will search for the best hyperparameters based on the objective function.
+    
+    ```bash
+      study.optimize(objective, n_trials=100)
+      
+### Step 6: Retrieve the Best Parameters
+
+- Once the optimization is complete, you can retrieve the best set of hyperparameters from the study object:
+
+    ```bash
+   best_params = study.best_params
+
+- You can then use these best hyperparameters to train your final model with XGBoost, LGBM, or CatBoost.
+
+#### Additional Notes
+
+- Make sure to adapt the objective function and hyperparameters to your specific machine learning problem and dataset.
+  
+- The same steps can be applied for optimizing hyperparameters with LightGBM and CatBoost, replacing the relevant library and objective function accordingly.
+
+- Optuna is a powerful tool for automating hyperparameter tuning, and it can significantly improve the performance of your machine learning models.
